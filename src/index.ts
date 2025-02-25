@@ -169,3 +169,118 @@ console.log(customer?.birthday?.getFullYear())
 //optional call
 //log?.('a')
 
+// classes
+class Coder_1 {
+    name: string
+    music: string
+    age: number
+    lang:string
+
+    constructor(
+        name:string,
+        music:string,
+        age:number,
+        lang:string
+    ) {
+        this.name = name
+        this.music = music
+        this.age = age
+        this.lang = lang
+    }
+}
+// to avoid redundancy, we use visibility modifiers or members
+class Coder {
+
+    // advanced: assertion to avoid initialization
+    secondLang!:string
+
+    constructor(
+        public readonly name:string,
+        public music:string,
+        private age:number,
+        protected lang:string = 'Typescript'
+    ) {
+        this.name = name
+        this.music = music
+        this.age = age
+        this.lang = lang
+    }
+    public getAge() {
+        return `Hello, I'm ${this.age}`
+    }
+}
+
+class WebDeb extends Coder {
+    constructor(
+        public computer:string,
+        name:string,
+        music:string,
+        age:number,
+    ){
+        super(name,music,age)
+        this.computer=computer;
+    }
+    public getLang(){
+        return `I write ${this.lang}`
+    }
+}
+
+// Interfaces with properties and methods
+interface Musician {
+    name: string,
+    instrument: string,
+    play(action:string):string
+}
+
+class Guitarist implements Musician {
+    name:string;
+    instrument: string;
+    constructor(name:string,instrument:string){
+        this.name=name
+        this.instrument=instrument
+    }
+    play(action:string){
+        return  `${this.name} ${action} the ${this.instrument}`
+    }
+
+}
+
+// Static method and properties
+class Peeps {
+    // static applies to the class itself
+    static count:number = 0
+    static getCount():number {
+        return Peeps.count
+    }
+    public id: number
+    constructor(public name:string){
+        this.name = name
+        this.id = ++Peeps.count
+    }
+}
+const john = new Peeps('John')
+
+// getters and setters
+class Bands {
+    private dataState: string [];
+    constructor() {
+        this.dataState = []
+    }
+    public get data(): string[]{
+        return this.dataState
+    }
+    // compiler does not allow to return a value
+    public set data(value:string[]){
+     if (Array.isArray(value) && value.every(el => typeof el === 'string'))   {
+        this.dataState=value
+        return
+     }
+     else throw new Error('Param is not an array of strings')
+    }
+    
+}
+// we can use getter and setter
+const MyBands = new Bands()
+MyBands.data = ["a","b"]
+console.log(MyBands.data)
+// ... is a spread in
